@@ -3,135 +3,215 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Стоматология - Прайс-лист</title>
+  <title>🦷 Стоматология</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --primary: #0088cc;
-      --primary-dark: #006699;
-      --bg: #f0f2f5;
-      --card: #ffffff;
-      --text: #1a1a1a;
-      --text-secondary: #666;
-      --border: #e0e0e0;
-      --success: #4caf50;
-      --shadow: 0 2px 12px rgba(0,0,0,0.08);
-      --radius: 14px;
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --primary-dark: #4f46e5;
+      --secondary: #06b6d4;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-secondary: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+      --radius: 20px;
+      --radius-sm: 12px;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       min-height: 100dvh;
       overflow-x: hidden;
+      padding-bottom: 90px;
     }
 
     .header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
       color: white;
-      padding: 24px 20px;
+      padding: 32px 24px 40px;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 4px 20px rgba(0,136,204,0.3);
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 0 32px 32px;
     }
 
-    .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-    .header p { font-size: 14px; opacity: 0.9; }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 200px;
+      height: 200px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+
+    .header-icon {
+      font-size: 48px;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+      letter-spacing: -0.5px;
+    }
+
+    .header p {
+      font-size: 15px;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+    }
 
     .search-box {
-      padding: 12px 16px;
-      background: white;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 76px;
-      z-index: 99;
+      margin: -24px 20px 16px;
+      position: relative;
+      z-index: 10;
     }
 
     .search-input {
       width: 100%;
-      padding: 12px 16px;
-      border: 2px solid var(--border);
-      border-radius: 12px;
+      padding: 16px 20px 16px 52px;
+      border: none;
+      border-radius: var(--radius);
       font-size: 16px;
       outline: none;
-      transition: all 0.2s;
-      background: var(--bg);
+      background: var(--surface);
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%2364748b' viewBox='0 0 24 24'%3E%3Cpath d='M21.71 20.29l-3.4-3.39A9 9 0 1020 17.61l3.39 3.4a1 1 0 001.42-1.42zM4 11a7 7 0 1114 0 7 7 0 01-14 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 18px center;
     }
 
     .search-input:focus {
-      border-color: var(--primary);
-      background: white;
-      box-shadow: 0 0 0 3px rgba(0,136,204,0.1);
+      box-shadow: 0 0 0 3px rgba(99,102,241,0.3), var(--shadow-lg);
+      transform: translateY(-2px);
     }
+
+    .search-input::placeholder { color: var(--text-secondary); }
 
     .tabs {
       display: flex;
       gap: 8px;
-      padding: 12px 16px;
+      padding: 0 20px 16px;
       overflow-x: auto;
       scrollbar-width: none;
-      background: white;
-      border-bottom: 1px solid var(--border);
     }
 
     .tabs::-webkit-scrollbar { display: none; }
 
     .tab {
-      padding: 10px 18px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 25px;
+      padding: 10px 20px;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 100px;
       font-size: 14px;
+      font-weight: 600;
       white-space: nowrap;
       cursor: pointer;
-      transition: all 0.2s;
-      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--text-secondary);
     }
+
+    .tab:active { transform: scale(0.95); }
 
     .tab.active {
       background: var(--primary);
       color: white;
       border-color: var(--primary);
-      box-shadow: 0 2px 8px rgba(0,136,204,0.3);
+      box-shadow: 0 4px 16px rgba(99,102,241,0.4);
     }
 
-    .content { padding: 16px; padding-bottom: 100px; }
+    .content { padding: 0 20px; }
 
-    .category-block { margin-bottom: 24px; }
+    .category-block { margin-bottom: 28px; animation: fadeUp 0.4s ease; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     .category-title {
       font-size: 18px;
       font-weight: 700;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 3px solid var(--primary);
-      display: inline-block;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .category-title::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-light), transparent);
+      border-radius: 2px;
     }
 
     .procedure-card {
-      background: var(--card);
+      background: var(--surface);
       border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 10px;
-      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
       cursor: pointer;
-      transition: all 0.2s;
-      border: 1px solid transparent;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
     }
 
-    .procedure-card:active {
-      transform: scale(0.98);
-      background: #f8f9fa;
+    .procedure-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--primary), var(--secondary));
+      opacity: 0;
+      transition: opacity 0.3s;
     }
 
     .procedure-card:hover {
-      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+      border-color: var(--primary-light);
     }
+
+    .procedure-card:hover::before { opacity: 1; }
+
+    .procedure-card:active { transform: scale(0.98); }
 
     .procedure-header {
       display: flex;
@@ -144,45 +224,49 @@
       font-size: 15px;
       font-weight: 600;
       flex: 1;
-      line-height: 1.3;
+      line-height: 1.4;
+      color: var(--text);
     }
 
     .procedure-price {
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--primary);
       white-space: nowrap;
+      background: rgba(99,102,241,0.1);
+      padding: 4px 10px;
+      border-radius: 8px;
     }
 
     .procedure-desc {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-secondary);
-      line-height: 1.5;
-      margin-top: 10px;
-      padding-top: 10px;
+      line-height: 1.6;
+      margin-top: 12px;
+      padding-top: 12px;
       border-top: 1px solid var(--border);
       display: none;
     }
 
     .procedure-card.expanded .procedure-desc {
       display: block;
-      animation: fadeIn 0.2s ease;
+      animation: fadeIn 0.3s ease;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; max-height: 0; }
+      to { opacity: 1; max-height: 500px; }
     }
 
-    .expand-icon {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-left: 4px;
-      transition: transform 0.2s;
-    }
-
-    .procedure-card.expanded .expand-icon {
-      transform: rotate(180deg);
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      background: rgba(6,182,212,0.1);
+      color: var(--secondary);
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 6px;
+      margin-top: 8px;
     }
 
     .no-results {
@@ -191,35 +275,43 @@
       color: var(--text-secondary);
     }
 
-    .no-results .icon { font-size: 48px; margin-bottom: 12px; }
+    .no-results .icon { font-size: 56px; margin-bottom: 16px; }
+    .no-results p { font-size: 16px; }
 
     .contact-bar {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: white;
-      padding: 12px 16px;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+      background: var(--surface);
+      padding: 12px 20px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
       z-index: 100;
+      backdrop-filter: blur(10px);
     }
 
     .contact-btn {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, var(--success), #388e3c);
+      padding: 16px;
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
       color: white;
       border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 600;
+      border-radius: var(--radius-sm);
+      font-size: 17px;
+      font-weight: 700;
       cursor: pointer;
-      text-align: center;
-      transition: transform 0.2s;
+      transition: all 0.3s;
+      box-shadow: 0 4px 16px rgba(16,185,129,0.4);
     }
 
-    .contact-btn:active { transform: scale(0.98); }
+    .contact-btn:active {
+      transform: scale(0.96);
+      box-shadow: 0 2px 8px rgba(16,185,129,0.3);
+    }
 
     .modal-overlay {
       position: fixed;
@@ -227,23 +319,24 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
       z-index: 200;
       display: none;
       justify-content: center;
       align-items: flex-end;
+      backdrop-filter: blur(4px);
     }
 
     .modal-overlay.active { display: flex; }
 
     .modal {
-      background: white;
-      border-radius: 20px 20px 0 0;
-      padding: 24px 20px;
+      background: var(--surface);
+      border-radius: 28px 28px 0 0;
+      padding: 24px 24px 32px;
       width: 100%;
-      max-height: 70vh;
+      max-height: 75vh;
       overflow-y: auto;
-      animation: slideUp 0.3s ease;
+      animation: slideUp 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     @keyframes slideUp {
@@ -252,54 +345,97 @@
     }
 
     .modal-handle {
-      width: 40px;
-      height: 4px;
-      background: #ddd;
-      border-radius: 2px;
-      margin: 0 auto 16px;
+      width: 48px;
+      height: 5px;
+      background: var(--border);
+      border-radius: 3px;
+      margin: 0 auto 20px;
     }
 
     .modal-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.3;
     }
 
     .modal-price {
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 24px;
+      font-weight: 800;
       color: var(--primary);
-      margin-bottom: 16px;
+      margin-bottom: 20px;
+      display: inline-block;
+      background: rgba(99,102,241,0.1);
+      padding: 8px 16px;
+      border-radius: 12px;
     }
 
     .modal-desc {
-      font-size: 15px;
-      line-height: 1.6;
+      font-size: 16px;
+      line-height: 1.7;
       color: var(--text-secondary);
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .modal-close {
       width: 100%;
-      padding: 14px;
+      padding: 16px;
       background: var(--bg);
       border: none;
-      border-radius: 12px;
-      font-size: 16px;
+      border-radius: var(--radius-sm);
+      font-size: 17px;
       font-weight: 600;
       cursor: pointer;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+
+    .modal-close:active { background: var(--border); }
+
+    .stats {
+      display: flex;
+      gap: 12px;
+      padding: 0 20px 20px;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .stat-number {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      font-weight: 500;
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>🦷 Стоматология</h1>
-    <p>Нажмите на процедуру для подробностей</p>
+    <div class="header-icon">🦷</div>
+    <h1>Стоматология</h1>
+    <p>Качественные услуги по доступным ценам</p>
   </div>
 
   <div class="search-box">
-    <input type="text" class="search-input" id="searchInput" placeholder="🔍 Поиск по процедурам...">
+    <input type="text" class="search-input" id="searchInput" placeholder="Поиск процедуры...">
   </div>
+
+  <div class="stats" id="stats"></div>
 
   <div class="tabs" id="tabs"></div>
 
@@ -307,11 +443,13 @@
 
   <div class="no-results" id="noResults" style="display:none">
     <div class="icon">🔍</div>
-    <p>Ничего не найдено</p>
+    <p>Ничего не найдено<br>Попробуйте другой запрос</p>
   </div>
 
   <div class="contact-bar">
-    <button class="contact-btn" onclick="contactUs()">📞 Связаться с нами</button>
+    <button class="contact-btn" onclick="contactUs()">
+      <span>📞</span> Связаться с нами
+    </button>
   </div>
 
   <div class="modal-overlay" id="modal">
@@ -332,11 +470,26 @@
       try {
         const response = await fetch('/api/prices');
         pricesData = await response.json();
+        renderStats();
         renderTabs();
         renderContent();
       } catch (error) {
         console.error('Error:', error);
       }
+    }
+
+    function renderStats() {
+      const total = pricesData.categories.reduce((sum, cat) => sum + cat.items.length, 0);
+      document.getElementById('stats').innerHTML = `
+        <div class="stat-card">
+          <div class="stat-number">${pricesData.categories.length}</div>
+          <div class="stat-label">Категорий</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">${total}</div>
+          <div class="stat-label">Процедур</div>
+        </div>
+      `;
     }
 
     function renderTabs() {
@@ -345,7 +498,7 @@
 
       const allTab = document.createElement('div');
       allTab.className = 'tab active';
-      allTab.textContent = 'Все';
+      allTab.textContent = '✨ Все';
       allTab.onclick = () => { activeCategory = 'all'; renderTabs(); renderContent(); };
       container.appendChild(allTab);
 
@@ -389,12 +542,15 @@
           card.className = 'procedure-card';
           card.innerHTML = `
             <div class="procedure-header">
-              <span class="procedure-name">${item.name} <span class="expand-icon">▼</span></span>
+              <span class="procedure-name">${item.name}</span>
               <span class="procedure-price">${item.price}</span>
             </div>
             <div class="procedure-desc">${item.desc || ''}</div>
           `;
           card.onclick = () => {
+            document.querySelectorAll('.procedure-card.expanded').forEach(c => {
+              if (c !== card) c.classList.remove('expanded');
+            });
             card.classList.toggle('expanded');
           };
           card.ondblclick = (e) => {
@@ -439,9 +595,7 @@
       const tg = window.Telegram.WebApp;
       tg.ready();
       tg.expand();
-      tg.enableClosingConfirmation();
-      if (tg.setHeaderColor) tg.setHeaderColor('#0088cc');
-      if (tg.setBackgroundColor) tg.setBackgroundColor('#f0f2f5');
+      if (tg.setHeaderColor) tg.setHeaderColor('#6366f1');
     }
   </script>
 </body>
