@@ -1,0 +1,17 @@
+{
+  "name": "dental-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot for dental clinic with Mini App",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "localtunnel": "^2.0.2",
+    "node-telegram-bot-api": "^0.66.0"
+  }
+}

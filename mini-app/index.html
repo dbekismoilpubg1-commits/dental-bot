@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Стоматология - Прайс-лист</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #0088cc;
+      --primary-dark: #006699;
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #666;
+      --border: #e0e0e0;
+      --success: #4caf50;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+      --radius: 14px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 24px 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,136,204,0.3);
+    }
+
+    .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    .header p { font-size: 14px; opacity: 0.9; }
+
+    .search-box {
+      padding: 12px 16px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 76px;
+      z-index: 99;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.2s;
+      background: var(--bg);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(0,136,204,0.1);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      background: white;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tabs::-webkit-scrollbar { display: none; }
+
+    .tab {
+      padding: 10px 18px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 25px;
+      font-size: 14px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+
+    .tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(0,136,204,0.3);
+    }
+
+    .content { padding: 16px; padding-bottom: 100px; }
+
+    .category-block { margin-bottom: 24px; }
+
+    .category-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 3px solid var(--primary);
+      display: inline-block;
+    }
+
+    .procedure-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 10px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .procedure-card:active {
+      transform: scale(0.98);
+      background: #f8f9fa;
+    }
+
+    .procedure-card:hover {
+      border-color: var(--primary);
+    }
+
+    .procedure-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .procedure-name {
+      font-size: 15px;
+      font-weight: 600;
+      flex: 1;
+      line-height: 1.3;
+    }
+
+    .procedure-price {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    .procedure-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      display: none;
+    }
+
+    .procedure-card.expanded .procedure-desc {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .expand-icon {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-left: 4px;
+      transition: transform 0.2s;
+    }
+
+    .procedure-card.expanded .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+
+    .no-results .icon { font-size: 48px; margin-bottom: 12px; }
+
+    .contact-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      padding: 12px 16px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+      z-index: 100;
+    }
+
+    .contact-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--success), #388e3c);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .contact-btn:active { transform: scale(0.98); }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      display: none;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: white;
+      border-radius: 20px 20px 0 0;
+      padding: 24px 20px;
+      width: 100%;
+      max-height: 70vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-handle {
+      width: 40px;
+      height: 4px;
+      background: #ddd;
+      border-radius: 2px;
+      margin: 0 auto 16px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .modal-price {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .modal-desc {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .modal-close {
+      width: 100%;
+      padding: 14px;
+      background: var(--bg);
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🦷 Стоматология</h1>
+    <p>Нажмите на процедуру для подробностей</p>
+  </div>
+
+  <div class="search-box">
+    <input type="text" class="search-input" id="searchInput" placeholder="🔍 Поиск по процедурам...">
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="content" id="content"></div>
+
+  <div class="no-results" id="noResults" style="display:none">
+    <div class="icon">🔍</div>
+    <p>Ничего не найдено</p>
+  </div>
+
+  <div class="contact-bar">
+    <button class="contact-btn" onclick="contactUs()">📞 Связаться с нами</button>
+  </div>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <div class="modal-handle"></div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <button class="modal-close" onclick="closeModal()">Закрыть</button>
+    </div>
+  </div>
+
+  <script>
+    let pricesData = null;
+    let activeCategory = 'all';
+
+    async function loadPrices() {
+      try {
+        const response = await fetch('/api/prices');
+        pricesData = await response.json();
+        renderTabs();
+        renderContent();
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    function renderTabs() {
+      const container = document.getElementById('tabs');
+      container.innerHTML = '';
+
+      const allTab = document.createElement('div');
+      allTab.className = 'tab active';
+      allTab.textContent = 'Все';
+      allTab.onclick = () => { activeCategory = 'all'; renderTabs(); renderContent(); };
+      container.appendChild(allTab);
+
+      pricesData.categories.forEach(cat => {
+        const tab = document.createElement('div');
+        tab.className = 'tab' + (activeCategory === cat.id ? ' active' : '');
+        tab.textContent = cat.name;
+        tab.onclick = () => { activeCategory = cat.id; renderTabs(); renderContent(); };
+        container.appendChild(tab);
+      });
+    }
+
+    function renderContent() {
+      const container = document.getElementById('content');
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      container.innerHTML = '';
+
+      let hasResults = false;
+
+      pricesData.categories.forEach(category => {
+        if (activeCategory !== 'all' && activeCategory !== category.id) return;
+
+        const filteredItems = category.items.filter(item =>
+          item.name.toLowerCase().includes(searchTerm) ||
+          (item.desc && item.desc.toLowerCase().includes(searchTerm))
+        );
+
+        if (filteredItems.length === 0) return;
+        hasResults = true;
+
+        const block = document.createElement('div');
+        block.className = 'category-block';
+
+        const title = document.createElement('div');
+        title.className = 'category-title';
+        title.textContent = category.name;
+        block.appendChild(title);
+
+        filteredItems.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'procedure-card';
+          card.innerHTML = `
+            <div class="procedure-header">
+              <span class="procedure-name">${item.name} <span class="expand-icon">▼</span></span>
+              <span class="procedure-price">${item.price}</span>
+            </div>
+            <div class="procedure-desc">${item.desc || ''}</div>
+          `;
+          card.onclick = () => {
+            card.classList.toggle('expanded');
+          };
+          card.ondblclick = (e) => {
+            e.stopPropagation();
+            openModal(item);
+          };
+          block.appendChild(card);
+        });
+
+        container.appendChild(block);
+      });
+
+      document.getElementById('noResults').style.display = hasResults ? 'none' : 'block';
+    }
+
+    function openModal(item) {
+      document.getElementById('modalTitle').textContent = item.name;
+      document.getElementById('modalPrice').textContent = item.price;
+      document.getElementById('modalDesc').textContent = item.desc || 'Описание отсутствует';
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+    }
+
+    function contactUs() {
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.close();
+      }
+    }
+
+    document.getElementById('searchInput').addEventListener('input', renderContent);
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.id === 'modal') closeModal();
+    });
+
+    loadPrices();
+
+    if (window.Telegram && window.Telegram.WebApp) {
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      tg.expand();
+      tg.enableClosingConfirmation();
+      if (tg.setHeaderColor) tg.setHeaderColor('#0088cc');
+      if (tg.setBackgroundColor) tg.setBackgroundColor('#f0f2f5');
+    }
+  </script>
+</body>
+</html>
