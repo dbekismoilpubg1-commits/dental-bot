@@ -24,6 +24,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'mini-app', 'index.html'));
 });
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', service: 'dental-bot', version: '1.0' });
+});
+
 app.get('/api/prices', (req, res) => {
   res.json(pricesData);
 });
